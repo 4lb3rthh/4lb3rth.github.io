@@ -2,9 +2,8 @@
 # Site settings
 title: Project-ceti
 email:
-description: > # this means to ignore newlines until "baseurl:"
- 
-url: "https://4lb3rthh.github.io" # the base hostname & protocol for your site
+description:  # this means to ignore newlines until "baseurl:" 
+url: https://4lb3rthh.github.io
 
 # User setting
 owner:
