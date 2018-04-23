@@ -1,6 +1,6 @@
 
 # Site settings
-title: Project-ceti
+title: My page alberth
 email:
 description:  # this means to ignore newlines until "baseurl:" 
 url: https://alberth7.github.io/
@@ -8,7 +8,7 @@ url: https://alberth7.github.io/
 # User setting
 owner:
 email: "maikeru.bash@gmail.com"
-facebook_username:
+facebook_username: michael apaza
 twitter_username:
 github_username:
 address:

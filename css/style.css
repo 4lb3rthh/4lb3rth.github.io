@@ -1,0 +1,164 @@
+/* menu
+ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+}
+li{
+    display: inline-block;
+    float: left;
+    margin-right: 1px;
+    
+}
+li a{
+    display: block;
+    min-width: 140px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    font-family: "Helvetica Neue", Helvetica,Arial,sans-serif;
+    color: #fff;
+    background: #2f3036;
+    text-decoration: none;
+    
+}
+
+
+
+************/
+
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+
+body{
+        font-family: Roboto;    
+
+}
+header{
+    width: 100%;
+    background: #ae0d36;
+    position: fixed;
+    z-index: 1;
+}
+
+.header1{
+        background-color: black;
+        margin-top: 5px;
+        color: red;
+        border: 0;
+        padding: 0;
+        font-style: italic;
+        font-size: 25px;
+}
+
+.menu{
+    width: 100%;
+    max-width: 1100px;
+    margin: auto;
+    padding: .5em 0;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+
+.menu .container-menu .logo .logo-name a{
+    text-decoration: none;
+    color: white;
+    font-size: 30px;
+    margin-left: 8px;
+    font-weight: normal;
+    
+}
+.menu .container-menu .logo .logo-name{
+    display: flex;
+    align-items: center
+
+}
+
+.menu .container-menu .logo .logo-name img{
+    width: 60px;
+}  
+
+.menu .container-menu .logo .btn-menu{
+    text-decoration: none;
+    color: white;
+    font-size: 30px;
+    display: none;
+}
+
+.menu .menu-link ul{
+    list-style: none;
+    
+}
+
+.menu .menu-link ul li{
+    display: inline-block;
+}
+
+.menu .menu-link ul li a{
+    text-decoration: none;
+    color: white;
+    margin-left: 15px;
+    font-size: 1.2em;
+    transition: .2s;
+    border-bottom: 2px solid transparent;
+    
+}
+
+
+.menu .menu-link .hidden{
+    display:none;
+    position: absolute;
+    min-width: 14px;
+    
+}
+.menu .menu-link ul li a:hover{
+    border-bottom: 2px solid #91fd9e;
+    color: #91fd9e;    
+} 
+.banner{
+    position: relative;
+    background: url('../img/fondo.jpg');
+    width: 100%;
+    max-width: 1100px;
+    top: 52px;
+    margin: auto;
+    height: 400px;
+    color:white
+}
+.banner .bg-details {
+    width:100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+
+
+.menu .menu-link li:hover>ul{
+    display: block;
+    display: grid;
+}
+    
+        
+  
+        
+        
+  
