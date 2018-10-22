@@ -1,0 +1,59 @@
+Skip to content
+ 
+Search or jump to…
+
+Pull requests
+Issues
+Marketplace
+Explore
+ @alberth7 Sign out
+0
+0 0 alberth7/alberth7.github.io
+ Code  Issues 0  Pull requests 0  Projects 0  Wiki  Insights  Settings
+alberth7.github.io/_config.yml
+c7a98a8  on Apr 22
+@alberth7 alberth7 actializacion de pagina web
+    
+30 lines (24 sloc)  491 Bytes
+
+# Site settings
+title: My page alberth
+email:
+description:  # this means to ignore newlines until "baseurl:" 
+url: https://yapitalapaz.github.io/
+
+# User setting
+owner:
+email: "maikeru.bash@gmail.com"
+facebook_username: michael apaza
+twitter_username:
+github_username:
+address:
+  - line:
+  - line:
+  # Feel free to add more lines here 
+telephone:
+copyright:
+
+# API settings
+google_api_key:
+
+# Build settings
+gems: []
+
+markdown: 
+# toc_levels: 1..2
+#https://www.youtube.com/watch?v=ChNBXRjHDnE
+© 2018 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Help
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
+Press h to open a hovercard with more details.
