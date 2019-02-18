@@ -1,0 +1,620 @@
+----------------------------------------------------------------
+							MÉTODOS:
+----------------------------------------------------------------
+
+
+printAscii macro ascii
+printCad macro cad
+printNum1 macro numAscii
+printNum2 macro num
+leerNum2 macro numero
+leerNumInAl macro
+
+ leer macro cad
+
+nl db 0Dh,0Ah,"$"
+
+printcad nl
+-----------------------------------------------------------------
+
+include C:\emu8086\librerias\my_company.txt
+data segment
+nl db 0Dh,0Ah,"$"
+
+ends
+stack segment
+	dw 128 dump(0)
+    
+ends
+code segment
+start:
+
+	mov ax,data
+	mov ds,ax
+
+	mov bh,1010_0001b ;colorfondo_colorletra
+    mov cx,0000h      ; posicion ch=fila,cl=columna
+    mov dx,164dh      ; dh=altura,dl=ancho
+    mov ah,06         ;
+    mov al,0          ;
+    int 10h           ;
+
+	mov ah,4ch
+	int 21h
+ends
+end start
+
+
+
+
+******************************************************************
+TIPOS_DE_IMPRESION: 
+*****************************************************************
+
+imprime_un_caracter:
+
+printAscii macro ascii
+	push ax
+	push dx
+	mov ah,02h
+	mov dl,ascii
+	int 21h
+	pop dx
+	pop ax
+endm
+
+imprime_una_cadena:
+
+printCad macro cad
+	push ax
+    push dx
+    lea dx,cad
+    mov ah,09h
+    int 21h
+    pop dx
+    pop ax	
+endm
+
+
+
+imprime_solo_un_numero_del_0_al_9:
+
+NOTA: Como esta en hexadecimal y para mostar se debe
+	sumar 30h para que muestre numeros.
+	ESTA sumando 30h
+
+printNum1 macro numAscii
+	push ax
+    push dx   
+    mov ah,02h
+    mov dl,numAscii
+    add dl,30h
+    int 21h
+    pop dx
+    pop ax
+endm
+
+
+imprime_un_numero_de_dos_caracteres:
+
+NOTA: ente metodo imprime numeros del 1 hasta 256
+porque solo se maneja 8 bits.
+
+printNum2 macro num
+    push ax
+   push bx
+   push cx
+   push dx
+
+   mov al,num
+   mov ah, 00h ; coloca en ax cociente
+   mov cx, 00h  ; inicializando en contador
+   mov dl, 0ah ; para el numerador 
+  bucle1:  
+   
+    div dl
+    inc cx
+    mov bl, ah  ; para pìla
+    mov bh, 00h ; para pìla
+    push bx
+    ;mov dl, al
+    mov ah, 00h
+    cmp al, 00h
+    
+  jne bucle1
+  
+  bucle2:
+    pop ax
+    mov ah, 02h
+    mov dl, al
+    add dl, 30h
+    int 21h
+  loop bucle2
+  pop dx
+  pop cx
+  pop bx
+  pop ax     
+endm
+
+
+***********************************************************************************
+	LEER_DESDE_TECLADO:
+***********************************************************************************
+
+
+lee_desde_teclado_solo_un_digito:
+
+NOTA: Cuando se teclea, ingresa en hexadecimal, por lo cual
+	lo restamos 30h para que trabaje con numeros.
+    
+	Retorna en una variable leer o cualquiera el digito tecleado
+
+leerNum1 macro leer	
+	 push ax
+	 mov ah,01h 
+	 int 21h
+	 sub al,30h
+	 mov leer,al
+	 pop ax 
+endm
+
+
+
+
+
+lee_desde_declado_hasta_persionar_la_tecla_ENTER:
+
+
+leerNum2 macro num2
+local bucle,salir
+push ax
+push bx
+push dx
+mov num2,00h
+mov bl,0Ah
+	bucle:
+
+		mov ah,01h
+		int 21h
+		cmp al,0Dh
+		je salir
+		sub al,30h
+		mov dl,al
+		mov al,num2
+		mul bl
+		add al,dl
+
+		mov num2,al
+
+		jmp bucle
+	salir:
+pop dx
+pop bx
+pop ax	
+endm	
+
+leer_desde_teclado_y_lo_almacena_en_el_registro_AL:
+
+leerNumInAl macro
+;push ax
+mov ah,01h
+int 21h
+;pop ax
+endm
+
+
+
+*******************************************************************
+		COLORES:
+*******************************************************************
+
+    mov bh,1010_0001b ;colorfondo_colorletra
+    mov cx,0000h      ; posicion ch=fila,cl=columna
+    mov dx,164dh      ; dh=altura,dl=ancho
+    mov ah,06         ;
+    mov al,0          ;
+    int 10h           ;
+
+
+********************************************************************
+
+NUEVA_LINEA:
+
+nueva linea {
+	nl db 0Dh,0Ah,"$"
+	NOTA: hacer imprimir como una cadena
+}
+
+
+
+
+OPERACIONES:{
+	add
+	sub
+	dec (-1)
+	inc (+1)
+	cmp al,bl //si o si debe existir un registro
+
+
+}
+
+PROCEDIMIENTOS:{
+
+
+call  nombre_procedimiento
+
+nombre_procedimiento proc
+		push
+			codigo
+		pop
+ret
+________________________________ 
+ o tambien
+________________________________
+ 
+ call x
+
+ x:
+ 	codigo
+ ret
+
+}
+
+FUNCIONES:{
+
+		nombre_funcion macro
+			push
+			codigo
+			pop
+		endm
+}
+
+
+IF: {
+		opcion 1: 
+	________________________________
+		jmp nombre_salto //solo salta
+	________________________________
+	opcion 2:
+	________________________________
+
+	cmp num,01h //compara dos numeros
+	je verdad  //por verdad salta, si no es verdad sigue el codigo secuencial de arriba hacia abajo
+	falso //codigo
+	jmp salir	   
+	verdad:
+		codigo
+		jmp salir
+
+
+jne falso ; salta por falso
+verdad    ; verdad continua el cudigo
+
+falso
+
+}
+
+div: {
+
+ax=dividendo //al 
+bl=divisor
+ah=resto (mod)
+al=division real / cociente
+ div bl
+
+poner un cero por del
+
+
+
+
+***************************************************
+leer macro cad
+
+
+ LOCAL leer, proceso 
+ cld
+ mov di,0
+ leer:
+ mov ah,01
+ int 21h
+ 
+ cmp al,0dh
+ jz proceso
+ 
+ mov [cad +di],al
+ inc di
+
+jmp leer 
+ 
+ proceso:  
+ mov [cad +di],"$"
+ 
+    
+    
+endm
+
+
+}
+
+
+***************************
+ cadena 
+ *************************
+
+
+
+
+ leer macro cad
+
+ LOCAL leer, proceso 
+ cld
+ mov di,0
+ leer:
+ mov ah,01
+ int 21h
+ 
+ cmp al,0dh
+ jz proceso
+ 
+ mov [cad +di],al
+ inc di
+
+jmp leer 
+ 
+ proceso:  
+ mov [cad +di],"$"
+ 
+ endm
+
+
+----------------------------------------------------------
+                METODOS:
+---------------------------------------------------------
+    leerbyte NumCerosUnos
+    macro imprimebyte NumCerosUnos
+
+
+
+________________________________________________________
+TEMAS:
+    -ROTACION DE bits
+    - aaa 15 ah=1,al=5
+    -
+________________________________________________________
+
+
+****************************************************************
+	Rotacion_de_bits:
+******************************************************************
+_SAL_: rotacion por Izquierda
+
+
+-En bl almacenamos el numero en hexadecimal.
+-Con "sal bd,a" donde: 
+        sal =  rotacion de bits por la izquierda
+        a =  numero de rotaciones.
+_ tambien podemos contar los numeoros que estamos
+poniendo en bl sumarlos y posicionar en en orden 
+binario en el ejemplo es 01h+2=3=0100 = 4
+
+
+  mov bl,01h ; uno
+  sal bl,2   ;rotacion 
+  
+  mov ah,02h
+  mov dl,bl
+  add dl,30h
+  int 21h
+
+
+
+macro rotar_izquierda numHexa, rot
+
+
+    push ax
+    push bx
+    push dx
+    mov bl,numHexa
+    sal bl,rot  
+    mov ah,02h
+    add bl,30h
+    mov dl,bl
+    int 21h
+    pop dx
+    pop bx
+    pop ax
+endm
+
+_SHR_: rotacion por Derecha
+
+desplaza un bit hacia la izquieeda y lo rellena con cero
+"numHexa" es un numero binario o hexadecimal el mostrar es para 
+numeros del 0 al 9.
+rot el numeor de veces a desplazar el registro.
+solo trabajan con registros. hace efecto solo alregistro requerido.
+
+
+
+macro rot_div numHexa rot
+    push ax
+    push bx
+    push dx
+    mov bl,numHexa
+    shr bl,rot  
+    mov ah,02h
+    mov dl,bl
+    add dl,30h
+    int 21h
+    pop dx
+    pop bx
+    pop ax
+end
+
+
+
+****************************************************
+    leer_bits_y_mostar_bits
+****************************************************
+
+macro leerbyte NN
+    local bucle
+    mov cx,08
+    mov NN,0
+    bucle:
+        sal NN,1
+        mov ah,01h
+        int 21h
+        sub al,30h
+        add NN,al         
+    ;sal rellena con ceros a la izq 
+    loop bucle         
+endm 
+
+macro imprimebyte NN
+local bucle    
+    mov cx,08h
+    
+    bucle:
+      mov bx,00h
+      sal NN,1
+      adc bx,00h ;suma el acareo de cf bandera
+      mov ah,02h
+      mov dl,bl ;aqui es de tipo byte
+      add dl,30h
+      int 21h
+    loop bucle
+    
+endm
+
+
+
+*****************************************
+
+****************************************
+
+
+
+
+*******************************************************
+        COLORES
+*******************************************************
+tamado en cuenta en html 
+el margen sera:cx y border sera:dx
+
+
+    mov al,00h ; limpiar la pantalla
+    ;margen en hexadecimal
+
+    mov cl,hexadecimal ;columna
+    mov ch,hexadecimal ;fila
+
+    ; pintando en hexadecimal
+
+    mov dl,hexadecimal ; columna
+    mov dh,hexadecimal ; fila
+
+    mov bh, 012h; COLOR (1:fondo,2:letra) en hexadecimal
+
+    mov ah,06h; int 10h/ah06
+    int 10h
+
+    ;;;;;;;;;;;;;;;;;;;;;;;
+
+
+    ;moviendo el cursor; con la int 10h/ah02h
+
+  
+fondo,COLOR
+
+
+****************************************************
+solo para la cadena
+
+ mov ax, data
+    mov ds, ax
+    mov es,ax
+    
+    lea bp, cadena
+    mov ah,13h
+   mov bh,00
+   mov bl ,0e4h
+   ; mov bx,00e4h
+    ;00 nro pagina
+    mov cx,000ch;hasta donde imprimira la cadena 
+    mov dx,0505h ; borde  
+    ;fila y columna empiezo escritura
+    int 10h
+    
+
+
+**************************************
+letra por letra
+
+data segment
+    cadena db "h",70h,"o",14h,"l",51h,"a",2ah,"$"
+        
+ends
+
+stack segment
+    dw   128  dup(0)
+ends
+
+code segment
+start:
+
+    mov ax, data
+    mov ds, ax
+    mov es,ax
+    
+    lea bp, cadena
+    mov ax,1302h
+    mov bx,00aeh
+    
+    mov cx,0008h
+    mov dx,0305h   
+    
+    int 10h
+
+    mov ah, 4ch 
+    int 21h    
+ends
+
+end start .
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
